@@ -46,7 +46,7 @@ Repository = "https://github.com/yourusername/netscanner.git"
 Issues = "https://github.com/yourusername/netscanner/issues"
 
 [project.scripts]
-netscanner = "netscanner.__main__:main"
+netscanner = "src.__main__:main"
 
 [project.optional-dependencies]
 dev = [
@@ -59,52 +59,19 @@ dev = [
     "mypy>=1.0.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-dir]
-"" = "src"
+[tool.setuptools]
+package-dir = {"" = "."}
+packages = ["src"]
 
 [tool.black]
 line-length = 100
 target-version = ['py38', 'py39', 'py310', 'py311']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-    | \.venv
-    | build
-    | dist
-)/
-'''
 
 [tool.isort]
 profile = "black"
 line_length = 100
-src_paths = ["src", "tests"]
-
-[tool.mypy]
-python_version = "3.8"
-warn_return_any = true
-warn_unused_configs = true
-ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-python_functions = ["test_*"]
 addopts = "-v --tb=short"
-markers = [
-    "integration: marks tests as integration tests (may require network)",
-]
-
-[tool.coverage.run]
-source = ["src/netscanner"]
-branch = true
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "if __name__ == .__main__.:",
-    "raise NotImplementedError",
-]
